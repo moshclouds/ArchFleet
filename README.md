@@ -8,7 +8,7 @@ This repository demonstrates how to build **multi-architecture Docker images (AM
 
 ---
 
-## 📋 Table of Contents
+<!-- ## 📋 Table of Contents
 1. [Project Overview](#project-overview)
 2. [Technologies Used](#technologies-used)
 3. [Architecture Overview](#architecture-overview)
@@ -20,7 +20,7 @@ This repository demonstrates how to build **multi-architecture Docker images (AM
 7. [Secrets Configuration](#secrets-configuration)
 8. [Deployment URLs](#deployment-urls)
 
----
+--- -->
 
 ## 🌟 Project Overview
 This project focuses on:
