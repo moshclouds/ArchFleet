@@ -1,0 +1,24 @@
+{
+  "name": "archfleet",
+  "version": "1.0.0",
+  "description": "arch fleet made for multi-arch docker building",
+  "main": "index.js",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
+  },
+  "keywords": [
+    "docker",
+    "multi-arch"
+  ],
+  "author": "@moshdev2213 @moshcloud",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
