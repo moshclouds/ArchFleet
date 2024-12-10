@@ -56,8 +56,8 @@ jobs:
           gcloud run deploy ${{ env.GCR_SERVICE_AMD }} \
             --image ${{ env.GAR_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ env.GAR_REPO_NAME_AMD }}/${{ env.GAR_NAME_AMD }}:${{ github.sha }} \
             --platform managed \
+            --region ${{ secrets.GCR_REGION }} \
             --port 8349 \
-            --region ${{ secrets.GCP_REGION }} \
             --allow-unauthenticated
 
       # Step 8: Build and Push ARM64 Image
@@ -74,8 +74,8 @@ jobs:
           gcloud run deploy ${{ env.GCR_SERVICE_ARM }} \
             --image ${{ env.GAR_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ env.GAR_REPO_NAME_ARM }}/${{ env.GAR_NAME_ARM }}:${{ github.sha }} \
             --platform managed \
+            --region ${{ secrets.GCR_REGION }} \
             --port 8349 \
-            --region ${{ secrets.GCP_REGION }} \
             --allow-unauthenticated
 
       # Step 10: Summary
