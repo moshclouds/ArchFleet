@@ -1,0 +1,59 @@
+name: Build and Deploy ARM64 Architecture
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GAR_REGION: ${{ secrets.GAR_REGION }}
+  GCR_SERVICE_ARM: ${{ secrets.GCR_SERVICE_ARM }}
+  GAR_NAME_ARM: ${{ secrets.GAR_NAME_ARM }}
+  GAR_REPO_NAME_ARM: ${{ secrets.GAR_REPO_NAME_ARM }}
+
+jobs:
+  build-and-deploy-arm64:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Authenticate with GCP
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # Step 3: Configure Docker for GAR
+      - name: Configure Docker Auth for GAR
+        run: |
+          gcloud auth configure-docker ${{ env.GAR_REGION }}-docker.pkg.dev
+
+      # Step 4: Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Step 5: Build and Push ARM64 Image
+      - name: Build and Push ARM64 Image
+        run: |
+          docker buildx build \
+            --platform linux/arm64 \
+            --push \
+            -t ${{ env.GAR_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ env.GAR_REPO_NAME_ARM }}/${{ env.GAR_NAME_ARM }}:${{ github.sha }} .
+
+      # Step 6: Deploy ARM64 Image to Cloud Run
+      - name: Deploy ARM64 to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.GCR_SERVICE_ARM }} \
+            --image ${{ env.GAR_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ env.GAR_REPO_NAME_ARM }}/${{ env.GAR_NAME_ARM }}:${{ github.sha }} \
+            --platform managed \
+            --region ${{ secrets.GCR_REGION }} \
+            --port 8349 \
+            --allow-unauthenticated
+
+      # Step 7: Summary
+      - name: Show ARM64 Deployment URL
+        run: |
+          echo "ARM64 Deployment URL: https://${{ env.GCR_SERVICE_ARM }}-${{ secrets.GCP_REGION }}.a.run.app"

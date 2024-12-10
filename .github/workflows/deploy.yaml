@@ -3,7 +3,7 @@ name: Build and Deploy Architectures
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   GAR_REGION: ${{ secrets.GAR_REGION }}
