@@ -3,7 +3,8 @@
 This repository demonstrates how to build **multi-architecture Docker images (AMD64 and ARM64)** using **Docker Buildx** and deploy them to **Google Cloud Run** (for AMD64 only). The ARM64 build intentionally fails during deployment to Cloud Run, as ARM64 is not supported by Cloud Run, to explore Docker multi-architecture builds for learning purposes.
 
 ---
-<img width="720" alt="24" src="https://github.com/user-attachments/assets/3b9c4dbe-dc0a-46ac-bf37-143812e95063">
+<img width="960" alt="23 (1)" src="https://github.com/user-attachments/assets/7e71aa7d-5a03-40b2-888a-2e8b519d2771">
+
 
 ---
 
