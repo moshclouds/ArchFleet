@@ -10,7 +10,7 @@ app.use(cors(corsOption))
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    return response(res, 200, {message:"Server online"})
+    return response(res, 200, {message:"server online"})
 })
 
 //not found route
