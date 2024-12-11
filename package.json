@@ -18,6 +18,7 @@
   "author": "@moshdev2213 @moshcloud",
   "license": "ISC",
   "dependencies": {
+    "archfleet": "file:",
     "cors": "^2.8.5",
     "express": "^4.21.2"
   }

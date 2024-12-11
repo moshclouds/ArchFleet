@@ -31,11 +31,15 @@ jobs:
         run: |
           gcloud auth configure-docker ${{ env.GAR_REGION }}-docker.pkg.dev
 
-      # Step 4: Set up Docker Buildx
+      # Step 4: Set up QEMU for Multi-Architecture Builds
+      - name: Set up QEMU for multi-architecture builds
+        uses: docker/setup-qemu-action@v3
+
+      # Step 5: Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Step 5: Build and Push ARM64 Image
+      # Step 6: Build and Push ARM64 Image
       - name: Build and Push ARM64 Image
         run: |
           docker buildx build \
@@ -43,7 +47,7 @@ jobs:
             --push \
             -t ${{ env.GAR_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ env.GAR_REPO_NAME_ARM }}/${{ env.GAR_NAME_ARM }}:${{ github.sha }} .
 
-      # Step 6: Deploy ARM64 Image to Cloud Run
+      # Step 7: Deploy ARM64 Image to Cloud Run
       - name: Deploy ARM64 to Cloud Run
         run: |
           gcloud run deploy ${{ env.GCR_SERVICE_ARM }} \
@@ -53,7 +57,7 @@ jobs:
             --port 8349 \
             --allow-unauthenticated
 
-      # Step 7: Summary
+      # Step 8: Summary
       - name: Show ARM64 Deployment URL
         run: |
           echo "ARM64 Deployment URL: https://${{ env.GCR_SERVICE_ARM }}-${{ secrets.GCP_REGION }}.a.run.app"
